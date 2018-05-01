@@ -11,12 +11,8 @@
 // ******************************************************************
 
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Diagnostics;
-using System.IO;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Graph;
 using Microsoft.Toolkit.Services.MicrosoftGraph;
@@ -30,14 +26,6 @@ namespace Microsoft.Toolkit.Win32.UI.Controls.WinForms
     /// <seealso cref="IComponent" />
     public partial class GraphLoginComponent : Component
     {
-        private string clientId;
-        private string[] scopes;
-        private GraphServiceClient graphServiceClient;
-        private string displayName;
-        private string jobTitle;
-        private string email;
-        private System.Drawing.Image photo;
-
         /// <summary>
         /// Initializes a new instance of the <see cref="GraphLoginComponent" /> class.
         /// </summary>
@@ -60,60 +48,60 @@ namespace Microsoft.Toolkit.Win32.UI.Controls.WinForms
         /// <summary>
         /// Gets or sets the ClientId of the application registered in the Azure AD V2 portal: http://apps.dev.microsoft.com
         /// </summary>
-        public string ClientId { get => clientId; set => clientId = value; }
+        public string ClientId { get; set; }
 
         /// <summary>
         /// Gets or sets the array of request Scopes for accessing the Microsoft Graph.
         /// Must not be null when calling LoginAsync
         /// </summary>
-        public string[] Scopes { get => scopes; set => scopes = value; }
+        public string[] Scopes { get; set; }
 
         /// <summary>
         /// Gets the default image for the logged on user from the Microsoft Graph
         /// </summary>
-        public System.Drawing.Image Photo { get => photo; }
+        public System.Drawing.Image Photo { get; private set; }
 
         /// <summary>
         /// Gets the display name for the logged on user from the Microsoft Graph
         /// </summary>
-        public string DisplayName { get => displayName; }
+        public string DisplayName { get; private set; }
 
         /// <summary>
         /// Gets the job title for the logged on user from the Microsoft Graph.
         /// </summary>
-        public string JobTitle { get => jobTitle; }
+        public string JobTitle { get; private set; }
 
         /// <summary>
         /// Gets the email address (UPN) for the logged on user from the Microsoft Graph.
         /// </summary>
-        public string Email { get => email; }
+        public string Email { get; private set; }
 
         /// <summary>
         /// Gets the instance of the Microsoft.Graph.GraphServiceClient from the logon request
         /// </summary>
-        public GraphServiceClient GraphServiceClient { get => graphServiceClient; }
+        public GraphServiceClient GraphServiceClient { get; private set; }
 
         /// <summary>
-        /// LoginAsync provides entrypoint into the MicrosoftGraphService LoginAsync
+        /// LoginAsync provides entry point into the MicrosoftGraphService LoginAsync
         /// </summary>
         /// <returns>A MicrosoftGraphService reference</returns>
         public async Task<bool> LoginAsync()
         {
             // check inputs
-            if (string.IsNullOrEmpty(clientId))
+            if (string.IsNullOrEmpty(ClientId))
             {
                 // error
                 return false;
             }
 
-            if (Scopes == null)
+            if (Scopes == null || !Scopes.Any())
             {
                 // error
                 return false;
             }
 
             // Initialize the MicrosoftGraphService
-            if (!MicrosoftGraphService.Instance.Initialize(clientId, delegatedPermissionScopes: Scopes))
+            if (!MicrosoftGraphService.Instance.Initialize(ClientId, delegatedPermissionScopes: Scopes))
             {
                 // error
                 return false;
@@ -122,9 +110,9 @@ namespace Microsoft.Toolkit.Win32.UI.Controls.WinForms
             // Attempt to LoginAsync
             try
             {
-                await MicrosoftGraphService.Instance.LoginAsync();
+                await MicrosoftGraphService.Instance.LoginAsync().ConfigureAwait(false);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 // error
                 return false;
@@ -132,21 +120,24 @@ namespace Microsoft.Toolkit.Win32.UI.Controls.WinForms
 
             // Initialize fields from the User's information from the Microsoft Graph
             var user = await MicrosoftGraphService.Instance.GraphProvider.Me.Request().GetAsync();
-            displayName = user.DisplayName;
-            jobTitle = user.JobTitle;
-            email = user.Mail;
+
+            Verify.IsNotNull(user);
+
+            DisplayName = user.DisplayName;
+            JobTitle = user.JobTitle;
+            Email = user.Mail;
 
             // get the profile picture
-            using (Stream photoStream = await MicrosoftGraphService.Instance.GraphProvider.Me.Photo.Content.Request().GetAsync())
+            using (var photoStream = await MicrosoftGraphService.Instance.GraphProvider.Me.Photo.Content.Request().GetAsync().ConfigureAwait(false))
             {
                 if (photoStream != null)
                 {
-                    photo = System.Drawing.Image.FromStream(photoStream);
+                    Photo = System.Drawing.Image.FromStream(photoStream);
                 }
             }
 
             // return Microsoft.Graph.GraphServiceClient from the MicrosoftGraphService.Instance.GraphProvider
-            graphServiceClient = MicrosoftGraphService.Instance.GraphProvider;
+            GraphServiceClient = MicrosoftGraphService.Instance.GraphProvider;
             return true;
         }
     }
