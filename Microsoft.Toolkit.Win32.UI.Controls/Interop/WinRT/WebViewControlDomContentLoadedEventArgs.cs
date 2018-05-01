@@ -21,15 +21,12 @@ namespace Microsoft.Toolkit.Win32.UI.Controls.Interop.WinRT
     /// <remarks>Copy from <see cref="Windows.Web.UI.WebViewControlDOMContentLoadedEventArgs"/> to avoid requirement to link Windows.winmd</remarks>
     /// <seealso cref="Windows.Web.UI.WebViewControlDOMContentLoadedEventArgs"/>
     /// <seealso cref="EventArgs"/>
-    // ReSharper disable InconsistentNaming
     [System.Diagnostics.CodeAnalysis.SuppressMessage(
         "Microsoft.Naming",
         "CA1709:IdentifiersShouldBeCasedCorrectly",
         MessageId = "DOM",
         Justification = "Maintain consistency with WinRT type name")]
     public sealed class WebViewControlDOMContentLoadedEventArgs : EventArgs
-
-    // ReSharper restore InconsistentNaming
     {
         [SecurityCritical]
         internal WebViewControlDOMContentLoadedEventArgs(Windows.Web.UI.WebViewControlDOMContentLoadedEventArgs args)
@@ -53,14 +50,14 @@ namespace Microsoft.Toolkit.Win32.UI.Controls.Interop.WinRT
         /// </summary>
         /// <param name="args">The <see cref="Windows.Web.UI.WebViewControlDOMContentLoadedEventArgs"/> instance containing the event data.</param>
         /// <returns>The result of the conversion.</returns>
-        public static implicit operator WebViewControlDOMContentLoadedEventArgs(Windows.Web.UI.WebViewControlDOMContentLoadedEventArgs args) => ToWebViewControlDOMContentLoadedEventArgs(args);
+        public static implicit operator WebViewControlDOMContentLoadedEventArgs(Windows.Web.UI.WebViewControlDOMContentLoadedEventArgs args) => FromWebViewControlDOMContentLoadedEventArgs(args);
 
         /// <summary>
         /// Creates a <see cref="WebViewControlDOMContentLoadedEventArgs"/> from <see cref="Windows.Web.UI.WebViewControlDOMContentLoadedEventArgs"/>.
         /// </summary>
         /// <param name="args">The <see cref="Windows.Web.UI.WebViewControlDOMContentLoadedEventArgs"/> instance containing the event data.</param>
         /// <returns><see cref="WebViewControlDOMContentLoadedEventArgs"/>.</returns>
-        public static WebViewControlDOMContentLoadedEventArgs ToWebViewControlDOMContentLoadedEventArgs(
+        public static WebViewControlDOMContentLoadedEventArgs FromWebViewControlDOMContentLoadedEventArgs(
             Windows.Web.UI.WebViewControlDOMContentLoadedEventArgs args) =>
             new WebViewControlDOMContentLoadedEventArgs(args);
     }
