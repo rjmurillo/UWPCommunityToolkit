@@ -23,7 +23,7 @@ using System.Security;
 [assembly: AssemblyDescription("Wndows Forms and WPF controls for Windows Community Toolkit")]
 
 // Make sure this is the same in the VisualToolsManifest.xml file
-[assembly: AssemblyProduct("Windows Community Toolkit")]
+[assembly: AssemblyProduct("Windows 10 Controls")]
 [assembly: AssemblyCopyright("\x00a9 Microsoft Corporation. All rights reserved.")]
 [assembly: AssemblyCompany("Microsoft Corporation")]
 

@@ -1,6 +1,6 @@
 <FileList>
   <File Reference="Microsoft.Toolkit.Win32.UI.Controls.dll">
-    <ToolboxItems VSCategory="Windows Community Toolkit" BlendCategory="Windows Community Toolkit">
+    <ToolboxItems VSCategory="Windows 10 Controls" BlendCategory="Windows 10 Controls">
       <Item Type="Microsoft.Toolkit.Win32.UI.Controls.WPF.WebView" />
     </ToolboxItems>
   </File>
