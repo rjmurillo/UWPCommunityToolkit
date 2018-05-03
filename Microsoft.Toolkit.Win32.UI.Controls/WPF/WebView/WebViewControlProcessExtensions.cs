@@ -18,7 +18,10 @@ using Microsoft.Toolkit.Win32.UI.Controls.Interop.WinRT;
 
 namespace Microsoft.Toolkit.Win32.UI.Controls.WPF
 {
-    internal static class WebViewControlProcessExtensions
+    /// <summary>
+    /// Extends the funcionality of <see cref="WebViewControlProcess"/> for WPF.
+    /// </summary>
+    public static class WebViewControlProcessExtensions
     {
         /// <summary>
         /// Creates a <see cref="IWebView"/> within the context of <paramref name="process"/>.
@@ -31,7 +34,7 @@ namespace Microsoft.Toolkit.Win32.UI.Controls.WPF
         /// <paramref name="hostWindowHandle"/> is equal to <see cref="IntPtr.Zero"/>, or
         /// <paramref name="process"/> is <see langword="null" />.
         /// </exception>
-        internal static IWebView CreateWebView(
+        public static IWebView CreateWebView(
             this WebViewControlProcess process,
             IntPtr hostWindowHandle,
             Rect bounds)
@@ -60,7 +63,7 @@ namespace Microsoft.Toolkit.Win32.UI.Controls.WPF
         /// <paramref name="hostWindowHandle"/> is equal to <see cref="IntPtr.Zero"/>, or
         /// <paramref name="process"/> is <see langword="null" />.
         /// </exception>
-        internal static async Task<IWebView> CreateWebViewAsync(
+        public static async Task<IWebView> CreateWebViewAsync(
             this WebViewControlProcess process,
             IntPtr hostWindowHandle,
             Rect bounds)

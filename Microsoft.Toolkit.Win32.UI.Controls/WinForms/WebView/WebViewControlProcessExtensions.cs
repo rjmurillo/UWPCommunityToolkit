@@ -19,7 +19,10 @@ using WebViewControlProcess = Microsoft.Toolkit.Win32.UI.Controls.Interop.WinRT.
 
 namespace Microsoft.Toolkit.Win32.UI.Controls.WinForms
 {
-    internal static class WebViewControlProcessExtensions
+    /// <summary>
+    /// Extends the funcionality of <see cref="WebViewControlProcess"/> for Windows Forms.
+    /// </summary>
+    public static class WebViewControlProcessExtensions
     {
         /// <summary>
         /// Creates a <see cref="IWebView" /> within the context of <paramref name="process" />.
