@@ -7,12 +7,11 @@ keywords: windows 10, uwp, uwp community toolkit, uwp toolkit, Windows Forms, Gr
 
 # GraphLogin Component
 <!-- Describe your control -->
-The [GraphLogin component](https://docs.microsoft.com/dotnet/api/microsoft.toolkit.win32.ui.controls.winforms.graphlogin) is a Windows Forms component that provides and easy to use experience for authenticating with Azure AD and the Microsoft Graph.
+The [GraphLogin component](https://docs.microsoft.com/dotnet/api/microsoft.toolkit.win32.ui.controls.winforms.graphlogin) is a Windows Forms component that provides an easy to use experience for authenticating with Azure AD and the Microsoft Graph.  This component is being provided for Windows Forms developers that need a Microsoft Graph authentication solution on Windows 10 builds 1803 and earlier and on Windows 7.
 
 This component wraps the Toolkit's **MicrosoftGraphService** for an easy to use Login experience.  The control then provides read-only properties about the logged on user and an instance of the **GraphServiceClient** which can be used for additional calls with the Microsoft Graph SDK.
 
-> [!App Registration in Azure AD v2]
-Before using this control, the application must be registered in the Azure AD v2 endpoint.  For more information on registering your app see https://docs.microsoft.com/en-us/azure/active-directory/develop/active-directory-v2-app-registration.
+> [!IMPORTANT] Before using this component, the application must be registered in the Azure AD v2 endpoint.  For more information on registering your app see https://docs.microsoft.com/en-us/azure/active-directory/develop/active-directory-v2-app-registration.
 
 
 ## Syntax
@@ -82,13 +81,10 @@ To use this sample code in a Windows Forms application, install the Microsoft.To
 
 ## Requirements
 
-| Device family | .NetStandard 1.4 or higher   |
+| Device family | .NetFramework 4.6.1 or higher   |
 | -- | -- |
 | Namespace | Microsoft.Toolkit.Win32.UI.Controls.WinForms |
 | NuGet package | [Microsoft.Toolkit.Win32.UI.Controls](https://www.nuget.org/packages/Microsoft.Toolkit.Win32.UI.Controls/) |
-
-<!-- If your control supports .NET Standard then uncomment the below line -->
-The Control Name supports .NET Standard
 
 ## API Source Code
 
