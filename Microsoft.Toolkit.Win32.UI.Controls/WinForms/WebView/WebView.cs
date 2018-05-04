@@ -447,7 +447,7 @@ namespace Microsoft.Toolkit.Win32.UI.Controls.WinForms
             if (e.AffectedControl != null && e.AffectedProperty != null)
             {
                 // Ensure that the affected property is the Bounds property to the control
-                if (e.AffectedProperty == "Bounds")
+                if (e.AffectedProperty == nameof(Bounds))
                 {
                     UpdateBounds(Bounds);
                 }
@@ -473,11 +473,6 @@ namespace Microsoft.Toolkit.Win32.UI.Controls.WinForms
         private void UpdateBounds(Rectangle bounds)
         {
             _webViewControl?.UpdateBounds(bounds);
-        }
-
-        private void UpdateSize(Size size)
-        {
-            UpdateBounds(new Rectangle(ClientRectangle.Location, size));
         }
     }
 }
