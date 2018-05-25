@@ -3,7 +3,6 @@
 // See the LICENSE file in the project root for more information.
 
 using System;
-using System.Security.Policy;
 using System.Windows;
 using System.Windows.Input;
 using Microsoft.Toolkit.Win32.Samples.WebView;
@@ -132,6 +131,18 @@ namespace Microsoft.Toolkit.Win32.Samples.WPF.WebView
             }
         }
 
+        private void WebView1_OnContentLoading(object sender, WebViewControlContentLoadingEventArgs e)
+        {
+            Title = "Waiting for " + e.Uri?.Host ?? string.Empty;
+            Url.Text = e.Uri?.ToString() ?? string.Empty;
+        }
+
+        private void WebView1_OnDOMContentLoaded(object sender, WebViewControlDOMContentLoadedEventArgs e)
+        {
+            Title = WebView1.DocumentTitle;
+            Url.Text = e.Uri?.ToString() ?? string.Empty;
+        }
+
         private void WebView1_OnNavigationCompleted(object sender, WebViewControlNavigationCompletedEventArgs e)
         {
             TryAttachProcessExitedEventHandler();
@@ -145,7 +156,7 @@ namespace Microsoft.Toolkit.Win32.Samples.WPF.WebView
 
         private void WebView1_OnNavigationStarting(object sender, WebViewControlNavigationStartingEventArgs e)
         {
-            Title = $"Navigating {e.Uri?.ToString() ?? string.Empty}";
+            Title = $"Navigating {e.Uri?.Host ?? string.Empty}";
             Url.Text = e.Uri?.ToString() ?? string.Empty;
         }
 

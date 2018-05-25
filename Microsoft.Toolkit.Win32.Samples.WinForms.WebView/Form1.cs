@@ -21,7 +21,7 @@ namespace Microsoft.Toolkit.Win32.Samples.WinForms.WebView
             InitializeComponent();
 
             this.SetDefaultIcon();
-            
+
             webView1.NavigationStarting += (o, e) =>
             {
                 this.SetDefaultIcon();
@@ -112,10 +112,22 @@ namespace Microsoft.Toolkit.Win32.Samples.WinForms.WebView
             }
         }
 
+        private void webView1_ContentLoading(object sender, WebViewControlContentLoadingEventArgs e)
+        {
+            Text = "Waiting for " + e.Uri?.Host ?? string.Empty;
+            url.Text = e.Uri?.ToString() ?? string.Empty;
+        }
+
+        private void webView1_DOMContentLoaded(object sender, WebViewControlDOMContentLoadedEventArgs e)
+        {
+            Text = webView1.DocumentTitle;
+            url.Text = e.Uri?.ToString() ?? string.Empty;
+        }
+
         private void webView1_NavigationCompleted(object sender, WebViewControlNavigationCompletedEventArgs e)
         {
-            url.Text = e.Uri?.ToString() ?? string.Empty;
             Text = webView1.DocumentTitle;
+            url.Text = e.Uri?.ToString() ?? string.Empty;
             TryAttachProcessExitedEventHandler();
             if (!e.IsSuccess)
             {
@@ -126,7 +138,7 @@ namespace Microsoft.Toolkit.Win32.Samples.WinForms.WebView
 
         private void webView1_NavigationStarting(object sender, WebViewControlNavigationStartingEventArgs e)
         {
-            Text = "Navigating " + e.Uri?.ToString() ?? string.Empty;
+            Text = "Navigating " + e.Uri?.Host ?? string.Empty;
             url.Text = e.Uri?.ToString() ?? string.Empty;
         }
 

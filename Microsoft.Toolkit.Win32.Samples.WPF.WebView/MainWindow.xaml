@@ -57,6 +57,8 @@
         <WPF:WebView Name="WebView1"
                      Grid.Row="1"
                      ContainsFullScreenElementChanged="WebView1_OnContainsFullScreenElementChanged"
+                     ContentLoading="WebView1_OnContentLoading"
+                     DOMContentLoaded="WebView1_OnDOMContentLoaded"
                      IsIndexedDBEnabled="True"
                      IsJavaScriptEnabled="True"
                      IsPrivateNetworkClientServerCapabilityEnabled="True"
