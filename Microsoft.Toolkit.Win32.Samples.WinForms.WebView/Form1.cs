@@ -4,6 +4,7 @@
 
 using System;
 using System.Windows.Forms;
+using Microsoft.Toolkit.Win32.Samples.WebView;
 using Microsoft.Toolkit.Win32.UI.Controls.Interop.WinRT;
 using Microsoft.Toolkit.Win32.UI.Controls.WinForms;
 
@@ -18,6 +19,25 @@ namespace Microsoft.Toolkit.Win32.Samples.WinForms.WebView
         public Form1()
         {
             InitializeComponent();
+
+            this.SetDefaultIcon();
+            
+            webView1.NavigationStarting += (o, e) =>
+            {
+                this.SetDefaultIcon();
+            };
+            webView1.DOMContentLoaded += (o, e) =>
+            {
+#pragma warning disable 4014
+                webView1.SetFavIconAsync(this);
+#pragma warning restore 4014
+            };
+            webView1.NavigationCompleted += (o, e) =>
+            {
+#pragma warning disable 4014
+                webView1.SetFavIconAsync(this);
+#pragma warning restore 4014
+            };
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -94,9 +114,9 @@ namespace Microsoft.Toolkit.Win32.Samples.WinForms.WebView
 
         private void webView1_NavigationCompleted(object sender, WebViewControlNavigationCompletedEventArgs e)
         {
-            TryAttachProcessExitedEventHandler();
             url.Text = e.Uri?.ToString() ?? string.Empty;
             Text = webView1.DocumentTitle;
+            TryAttachProcessExitedEventHandler();
             if (!e.IsSuccess)
             {
                 MessageBox.Show($"Could not navigate to {e.Uri}", $"Error: {e.WebErrorStatus}",

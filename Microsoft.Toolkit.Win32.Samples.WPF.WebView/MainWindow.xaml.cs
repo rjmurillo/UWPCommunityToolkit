@@ -3,8 +3,10 @@
 // See the LICENSE file in the project root for more information.
 
 using System;
+using System.Security.Policy;
 using System.Windows;
 using System.Windows.Input;
+using Microsoft.Toolkit.Win32.Samples.WebView;
 using Microsoft.Toolkit.Win32.UI.Controls.Interop.WinRT;
 using Microsoft.Toolkit.Win32.UI.Controls.WinForms;
 
@@ -22,6 +24,24 @@ namespace Microsoft.Toolkit.Win32.Samples.WPF.WebView
         public MainWindow()
         {
             InitializeComponent();
+
+            this.SetDefaultIcon();
+            WebView1.NavigationStarting += (o, e) =>
+            {
+                this.SetDefaultIcon();
+            };
+            WebView1.DOMContentLoaded += (o, e) =>
+            {
+#pragma warning disable 4014
+                WebView1.SetFavIconAsync(this);
+#pragma warning restore 4014
+            };
+            WebView1.NavigationCompleted += (o, e) =>
+            {
+#pragma warning disable 4014
+                WebView1.SetFavIconAsync(this);
+#pragma warning restore 4014
+            };
         }
 
         private void BrowseBack_OnCanExecute(object sender, CanExecuteRoutedEventArgs e)
