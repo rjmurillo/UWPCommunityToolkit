@@ -5,6 +5,7 @@
 using System;
 using System.Collections.Generic;
 using System.Net.Http;
+using Microsoft.Toolkit.Win32.UI.Controls.Interop.WinRT;
 
 namespace Microsoft.Toolkit.Win32.UI.Controls
 {
@@ -26,5 +27,12 @@ namespace Microsoft.Toolkit.Win32.UI.Controls
             HttpMethod httpMethod,
             string content = null,
             IEnumerable<KeyValuePair<string, string>> headers = null);
+
+        /// <summary>
+        /// Loads local web content at the specified Uniform Resource Identifier (URI) using an <see cref="IUriToStreamResolver"/>.
+        /// </summary>
+        /// <param name="relativePath">A path identifying the local HTML content to load.</param>
+        /// <param name="streamResolver">A <see cref="IUriToStreamResolver"/> instance that converts a Uniform Resource Identifier (URI) into a stream to load.</param>
+        void NavigateToLocalStreamUri(Uri relativePath, IUriToStreamResolver streamResolver);
     }
 }

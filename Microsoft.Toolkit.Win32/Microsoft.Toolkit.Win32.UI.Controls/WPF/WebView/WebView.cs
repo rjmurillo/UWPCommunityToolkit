@@ -618,6 +618,21 @@ namespace Microsoft.Toolkit.Win32.UI.Controls.WPF
         }
 
         /// <inheritdoc />
+        public void NavigateToLocalStreamUri(Uri relativePath, IUriToStreamResolver streamResolver)
+        {
+            VerifyAccess();
+
+            do
+            {
+                Dispatcher.CurrentDispatcher.DoEvents();
+            }
+            while (!_initializationComplete.WaitOne(InitializationBlockingTime));
+
+            Verify.IsNotNull(_webViewControl);
+            _webViewControl.NavigateToLocalStreamUri(relativePath, streamResolver);
+        }
+
+        /// <inheritdoc />
         public void NavigateToString(string text)
         {
             VerifyAccess();

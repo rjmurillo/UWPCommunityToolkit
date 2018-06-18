@@ -8,7 +8,6 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Drawing2D;
-using System.Net.Http;
 using System.Runtime.InteropServices;
 using System.Security;
 using System.Security.Permissions;
@@ -16,7 +15,6 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using Microsoft.Toolkit.Win32.UI.Controls.Interop.Win32;
 using Microsoft.Toolkit.Win32.UI.Controls.Interop.WinRT;
-using Windows.Web.UI.Interop;
 using WebViewControlDeferredPermissionRequest = Microsoft.Toolkit.Win32.UI.Controls.Interop.WinRT.WebViewControlDeferredPermissionRequest;
 using WebViewControlMoveFocusReason = Microsoft.Toolkit.Win32.UI.Controls.Interop.WinRT.WebViewControlMoveFocusReason;
 using WebViewControlProcess = Microsoft.Toolkit.Win32.UI.Controls.Interop.WinRT.WebViewControlProcess;
@@ -55,6 +53,8 @@ namespace Microsoft.Toolkit.Win32.UI.Controls.WinForms
             Paint += OnWebViewPaint;
             Layout += OnWebViewLayout;
         }
+
+        internal WebViewControlHost Host => _webViewControl;
 
         /// <summary>
         /// Gets a value indicating whether <see cref="WebView"/> is supported in this environment.
@@ -420,31 +420,6 @@ namespace Microsoft.Toolkit.Win32.UI.Controls.WinForms
 
         /// <inheritdoc />
         public void MoveFocus(WebViewControlMoveFocusReason reason) => _webViewControl?.MoveFocus(reason);
-
-        /// <inheritdoc />
-        public void Navigate(Uri source) => _webViewControl?.Navigate(source);
-
-        /// <inheritdoc />
-        public void Navigate(
-            Uri requestUri,
-            HttpMethod httpMethod,
-            string content = null,
-            IEnumerable<KeyValuePair<string, string>> headers = null) =>
-            _webViewControl.Navigate(requestUri, httpMethod, content, headers);
-
-        /// <inheritdoc />
-        public void Navigate(string source)
-        {
-            Verify.IsFalse(IsDisposed);
-            Verify.IsNotNull(_webViewControl);
-            _webViewControl?.Navigate(source);
-        }
-
-        /// <inheritdoc />
-        public void NavigateToLocal(string relativePath) => _webViewControl?.NavigateToLocal(relativePath);
-
-        /// <inheritdoc />
-        public void NavigateToString(string text) => _webViewControl?.NavigateToString(text);
 
         /// <summary>
         /// Releases the unmanaged resources used by the <see cref="T:System.Windows.Forms.Control" /> and its child controls and optionally releases the managed resources.
