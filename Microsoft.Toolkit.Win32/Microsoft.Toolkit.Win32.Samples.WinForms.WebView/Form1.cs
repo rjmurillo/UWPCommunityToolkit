@@ -106,7 +106,7 @@ namespace Microsoft.Toolkit.Win32.Samples.WinForms.WebView
 
         private void webView1_NavigationStarting(object sender, WebViewControlNavigationStartingEventArgs e)
         {
-            Text = "Navigating " + e.Uri?.ToString() ?? string.Empty;
+            Text = "Navigating " + e.Uri.ToTrimmedUri() ?? string.Empty;
             url.Text = e.Uri?.ToString() ?? string.Empty;
         }
 

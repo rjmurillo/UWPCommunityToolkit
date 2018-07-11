@@ -5,6 +5,7 @@
 using System;
 using System.Windows;
 using System.Windows.Input;
+using Microsoft.Toolkit.Win32.Samples.WinForms.WebView;
 using Microsoft.Toolkit.Win32.UI.Controls.Interop.WinRT;
 using Microsoft.Toolkit.Win32.UI.Controls.WinForms;
 
@@ -125,7 +126,7 @@ namespace Microsoft.Toolkit.Win32.Samples.WPF.WebView
 
         private void WebView1_OnNavigationStarting(object sender, WebViewControlNavigationStartingEventArgs e)
         {
-            Title = $"Navigating {e.Uri?.ToString() ?? string.Empty}";
+            Title = $"Navigating {e.Uri.ToTrimmedUri() ?? string.Empty}";
             Url.Text = e.Uri?.ToString() ?? string.Empty;
         }
 
