@@ -5,7 +5,7 @@
 using System.Windows;
 using System.Windows.Markup;
 
-namespace Microsoft.Toolkit.Win32.UI.Controls.Test.WPF.WebView.FunctionalTests
+namespace Microsoft.Toolkit.Win32.UI.Controls.Test.WPF.WebView
 {
     public class TestHostWindow : Window, IComponentConnector
     {

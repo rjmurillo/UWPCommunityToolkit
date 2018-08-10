@@ -5,7 +5,6 @@
 using System;
 using System.Windows;
 using Microsoft.Toolkit.Win32.UI.Controls.Test.WebView.Shared;
-using Microsoft.Toolkit.Win32.UI.Controls.Test.WPF.WebView.FunctionalTests;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Should;
 
@@ -17,7 +16,7 @@ namespace Microsoft.Toolkit.Win32.UI.Controls.Test.WPF.WebView
     {
         protected WpfContextSpecification()
         {
-            App = new App();
+            Form = new TestHostWindow();
 
             Form.MouseEnter += (o, e) => { WriteLine($"Window.MouseEnter"); };
             Form.MouseWheel += (o, e) => { WriteLine($"Window.MouseWheel"); };
@@ -34,12 +33,8 @@ namespace Microsoft.Toolkit.Win32.UI.Controls.Test.WPF.WebView
             set => base.WebView = value;
         }
 
-        protected App App { get; }
-
         // Helps with code portability with WinForms
-        protected TestHostWindow Form => App.Window;
-
-
+        protected TestHostWindow Form { get; }
 
         protected override void Cleanup()
         {
@@ -50,7 +45,7 @@ namespace Microsoft.Toolkit.Win32.UI.Controls.Test.WPF.WebView
                 {
                     try
                     {
-                        if (App.MainWindow != null)
+                        if (Form != null)
                         {
                             // The Form is supposed to be closed when the test is completed (to signal it is done)
                             // If it has not been closed and disposed, go ahead and do that so we can unhook
@@ -67,16 +62,16 @@ namespace Microsoft.Toolkit.Win32.UI.Controls.Test.WPF.WebView
 
         protected override void CreateWebView()
         {
-            WebView = App.WebView;
+            WebView = Form.WebView1;
         }
         protected override void Given()
         {
-            App.MainWindow.Title = TestContext.TestName;
+            Form.Title = TestContext.TestName;
             CreateWebView();
 
             WebView.ShouldNotBeNull();
 
-            WebView.NavigationStarting += (o, e) => { App.MainWindow.Title = $"{TestContext.TestName}: {e.Uri}" ?? string.Empty; };
+            WebView.NavigationStarting += (o, e) => { Form.Title = $"{TestContext.TestName}: {e.Uri}" ?? string.Empty; };
             WebView.NavigationCompleted += (o, e) =>
             {
                 var focused = WebView.Focus();
@@ -98,8 +93,8 @@ namespace Microsoft.Toolkit.Win32.UI.Controls.Test.WPF.WebView
             }
 
             WebView.ShouldNotBeNull();
-            App.MainWindow.Loaded += OnFormLoad;
-            App.Run(App.MainWindow);
+            Form.Loaded += OnFormLoad;
+            Form.ShowDialog();
         }
     }
 }

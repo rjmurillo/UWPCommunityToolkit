@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFramework>net462</TargetFramework>
     <RootNamespace>Microsoft.Toolkit.Win32.UI.Controls.Test.WPF.WebView</RootNamespace>
@@ -43,6 +43,23 @@
   <Target Name="Pack">
     <!-- No-op to avoid build error when packing solution from commandline -->
   </Target>
+  <ItemGroup>
+    <Compile Include="..\UnitTests.WebView.WinForms\FunctionalTests\**\*Common.cs" />
+    <Content Include="..\UnitTests.WebView.WinForms\FunctionalTests\**\*.htm">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\UnitTests.WebView.WinForms\FunctionalTests\**\*.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Compile Include="..\..\Microsoft.Toolkit.Win32.UI.Controls\WPF\DispatcherExtensions.cs" Link="Shared\DispatcherExtensions.cs" />
+    <Compile Include="..\..\Microsoft.Toolkit.Win32.UI.Controls\WPF\TaskExtensions.cs" Link="Shared\TaskExtensions.cs" />
+    <Compile Include="..\..\Microsoft.Toolkit.Win32.UI.Controls\ClientUtilities.cs" Link="Shared\ClientUtilities.cs" />
+    <Compile Include="..\..\Microsoft.Toolkit.Win32.UI.Controls\DesignerUI.Designer.cs" Link="Shared\DesignerUI.Designer.cs" />
+    <Compile Include="..\..\Microsoft.Toolkit.Win32.UI.Controls\Interop\WinRT\UriToLocalStreamResolver.cs" Link="Shared\UriToLocalStreamResolver.cs" />
+    <Compile Include="..\..\Microsoft.Toolkit.Win32.UI.Controls\Interop\WinRT\WebViewDefaults.cs" Link="Shared\WebViewDefaults.cs" />
+    <Compile Include="..\..\Microsoft.Toolkit.Win32.UI.Controls\PathUtilities.cs" Link="Shared\PathUtilities.cs" />
+    <Compile Include="..\..\Microsoft.Toolkit.Win32.UI.Controls\UriHelper.cs" Link="Shared\UriHelper.cs" />
+  </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Microsoft.Toolkit.Win32.UI.Controls\Microsoft.Toolkit.Win32.UI.Controls.csproj" />
     <ProjectReference Include="..\UnitTests.WebView.Shared\UnitTests.WebView.Shared.csproj" />

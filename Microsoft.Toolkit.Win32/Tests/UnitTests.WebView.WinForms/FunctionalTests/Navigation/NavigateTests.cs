@@ -8,38 +8,15 @@ using System.IO;
 using System.Net.Http;
 using System.Text;
 using Microsoft.Toolkit.Win32.UI.Controls.Test.WebView.Shared;
+using Microsoft.Toolkit.Win32.UI.Controls.Test.WinForms.WebView.FunctionalTests;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Should;
 
-namespace Microsoft.Toolkit.Win32.UI.Controls.Test.WinForms.WebView.FunctionalTests.Navigation
+namespace Microsoft.Toolkit.Win32.UI.Controls.Test.WebView.FunctionalTests.Navigation
 {
-    [TestClass]
-    public class NavigateStringUri : HostFormWebViewContextSpecification
+    public partial class NavigateStringUri : HostFormWebViewContextSpecification
     {
-        private bool _navigationCompleted;
-        protected override void Given()
-        {
-            base.Given();
-            WebView.NavigationCompleted += (o, e) =>
-            {
-                _navigationCompleted = true;
-                Form.Close();
-            };
-        }
 
-        protected override void When()
-        {
-            PerformActionAndWaitForFormClose(() =>
-            {
-                WebView.Navigate(TestConstants.Uris.ExampleOrg.ToString());
-            });
-        }
-
-        [TestMethod]
-        public void NavigationCompleted()
-        {
-            _navigationCompleted.ShouldBeTrue();
-        }
     }
 
     [TestClass]

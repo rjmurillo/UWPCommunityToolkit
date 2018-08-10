@@ -1,4 +1,4 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
+// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -6,13 +6,12 @@ using Microsoft.Toolkit.Win32.UI.Controls.Test.WebView.Shared;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Should;
 
-namespace Microsoft.Toolkit.Win32.UI.Controls.Test.WPF.WebView
+namespace Microsoft.Toolkit.Win32.UI.Controls.Test.WebView.FunctionalTests.Navigation
 {
     [TestClass]
-    public class NavigateStringUri : WpfContextSpecification
+    public partial class NavigateStringUri
     {
         private bool _navigationCompleted;
-
         protected override void Given()
         {
             base.Given();

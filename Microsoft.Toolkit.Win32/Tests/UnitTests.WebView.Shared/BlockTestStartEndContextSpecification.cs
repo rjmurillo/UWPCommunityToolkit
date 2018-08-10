@@ -52,7 +52,9 @@ namespace Microsoft.Toolkit.Win32.UI.Controls.Test.WebView.Shared
                     // The layer above us should have cleaned everything up; if not log information about it here and clean up for the next test
                     TryAction(() =>
                     {
-                        if (WebView?.Process != null)
+                        var wvp = WebView?.Process;
+
+                        if (wvp != null)
                         {
                             var closeRequested = false;
                             var closeMainWindowRequested = false;
@@ -60,10 +62,10 @@ namespace Microsoft.Toolkit.Win32.UI.Controls.Test.WebView.Shared
 
                             TryAction(PrintProcessDetails);
 
-                            while (WebView.Process.ProcessId != 0)
+                            while (wvp.ProcessId != 0)
                             {
                                 orphan = true;
-                                var process = Process.GetProcessById((int)WebView.Process.ProcessId);
+                                var process = Process.GetProcessById((int)wvp.ProcessId);
                                 if (process != null)
                                 {
                                     WriteLine(

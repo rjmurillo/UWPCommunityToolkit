@@ -2,18 +2,18 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+using System;
 using Microsoft.Toolkit.Win32.UI.Controls.Test.WebView.Shared;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Should;
 
-namespace Microsoft.Toolkit.Win32.UI.Controls.Test.WinForms.WebView.FunctionalTests.Navigation
+namespace Microsoft.Toolkit.Win32.UI.Controls.Test.WebView.FunctionalTests.Navigation
 {
     [TestClass]
     [TestCategory(TestConstants.Categories.Nav)]
-    public class AfterNavigatingMoreThanOnce : HostFormWebViewContextSpecification
+    public partial class AfterNavigatingMoreThanOnceThenGoingBack
     {
         private int _navigationCount;
-        private bool _canGoBack;
 
         protected override void Given()
         {
@@ -21,22 +21,26 @@ namespace Microsoft.Toolkit.Win32.UI.Controls.Test.WinForms.WebView.FunctionalTe
 
             WebView.NavigationCompleted += (o, e) =>
             {
-                if (e.Uri == null) return;
-
                 _navigationCount++;
-
-                WriteLine($"NavCompleted: {e.Uri}");
+                WriteLine($"NavCompleted: {e.Uri}; NavCount: {_navigationCount}");
                 e.IsSuccess.ShouldBeTrue($"Navigation failure: {e.WebErrorStatus}");
-                if (e.Uri == TestConstants.Uris.ExampleCom)
+
+                if (WebView.CanGoBack)
                 {
-                    WebView.Navigate(TestConstants.Uris.ExampleNet);
+                    WebView.GoBack();
+                }
+                else if (!WebView.CanGoBack && WebView.CanGoForward)
+                {
+                    Form.Close();
                 }
                 else
                 {
-                    _canGoBack = WebView.CanGoBack;
-                    Form.Close();
+                    WebView.Navigate(new Uri(TestConstants.Uris.ExampleCom, "?" + _navigationCount));
                 }
+
+
             };
+
         }
 
         protected override void When()
@@ -45,11 +49,10 @@ namespace Microsoft.Toolkit.Win32.UI.Controls.Test.WinForms.WebView.FunctionalTe
         }
 
         [TestMethod]
-        [Timeout(TestConstants.Timeouts.Medium)]
-        public void CanGoBackIsTrue()
+        //[Timeout(TestConstants.Timeouts.Long)]
+        public void CanGoForwardIsTrue()
         {
-            _navigationCount.ShouldEqual(2);
-            _canGoBack.ShouldBeTrue();
+            // NOTE: Due to asynchronous nature the actual assert is in Given()
         }
     }
 }

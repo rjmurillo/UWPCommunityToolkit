@@ -6,7 +6,7 @@ using Microsoft.Toolkit.Win32.UI.Controls.Test.WinForms.WebView.FunctionalTests;
 
 namespace Microsoft.Toolkit.Win32.UI.Controls.Test.WebView.FunctionalTests.Navigation
 {
-    public partial class RefreshTests : HostFormWebViewContextSpecification
+    public partial class AfterNavigatingMoreThanOnce : HostFormWebViewContextSpecification
     {
     }
 }
