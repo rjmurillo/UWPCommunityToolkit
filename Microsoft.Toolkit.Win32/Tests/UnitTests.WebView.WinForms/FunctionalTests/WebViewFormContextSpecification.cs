@@ -10,11 +10,14 @@ using System.Net.Http;
 using System.Text;
 using System.Windows.Forms;
 using Microsoft.Toolkit.Win32.UI.Controls.Interop.WinRT;
+using Microsoft.Toolkit.Win32.UI.Controls.Test.WebView.Shared;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Should;
 
 namespace Microsoft.Toolkit.Win32.UI.Controls.Test.WinForms.WebView.FunctionalTests
 {
     [DebuggerStepThrough]
+    [TestCategory(TestConstants.Categories.Wf)]
     public abstract class WebViewFormContextSpecification : BlockTestStartEndContextSpecification
     {
         protected WebViewFormContextSpecification()
@@ -35,6 +38,12 @@ namespace Microsoft.Toolkit.Win32.UI.Controls.Test.WinForms.WebView.FunctionalTe
         }
 
         protected TestHostForm Form { get; private set; }
+
+        protected new Controls.WinForms.WebView WebView
+        {
+            get => (Controls.WinForms.WebView)base.WebView;
+            set => base.WebView = value;
+        }
 
         protected override void Cleanup()
         {
@@ -154,7 +163,7 @@ namespace Microsoft.Toolkit.Win32.UI.Controls.Test.WinForms.WebView.FunctionalTe
         {
             PerformActionAndWaitForFormClose(() =>
             {
-                WriteLine("Navigating WebView:");                
+                WriteLine("Navigating WebView:");
                 WebView.NavigateToLocal(relativePath);
             });
         }

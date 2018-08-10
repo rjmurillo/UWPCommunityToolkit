@@ -7,14 +7,12 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Windows.Forms;
 using Microsoft.Toolkit.Win32.UI.Controls.Interop.WinRT;
-using Microsoft.Toolkit.Win32.UI.Controls.Test.WebView.Shared;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Should;
 
-namespace Microsoft.Toolkit.Win32.UI.Controls.Test.WinForms.WebView.FunctionalTests
+namespace Microsoft.Toolkit.Win32.UI.Controls.Test.WebView.Shared
 {
     [DebuggerStepThrough]
-    [TestCategory(TestConstants.Categories.Wf)]
     public abstract class WebViewContextSpecification : ContextSpecification
     {
         private static readonly Dictionary<uint, string> TestPids = new Dictionary<uint, string>();
@@ -26,7 +24,7 @@ namespace Microsoft.Toolkit.Win32.UI.Controls.Test.WinForms.WebView.FunctionalTe
         }
 
         private static bool _alreadyInBlock = false;
-        protected Controls.WinForms.WebView WebView { get; set; }
+        protected virtual IWebView WebView { get; set; }
 
         protected override void Cleanup()
         {
@@ -38,10 +36,22 @@ namespace Microsoft.Toolkit.Win32.UI.Controls.Test.WinForms.WebView.FunctionalTe
                     UnsubscribeWebViewEvents();
                     TryAction(() =>
                     {
-                        if (WebView != null && !WebView.IsDisposed)
+                        if (WebView != null)
                         {
-                            WriteLine("WebView is not null and has not been disposed. Calling Dispose()");
-                            WebView.Dispose();
+                            if (WebView is WinForms.WebView wfwv)
+                            {
+                                if (!wfwv.IsDisposed)
+                                {
+                                    WriteLine("WebView is not null and has not been disposed. Calling Dispose()");
+                                    wfwv.Dispose();
+                                }
+                            }
+                            else if (WebView is IDisposable dwv)
+                            {
+                                WriteLine("WebView is not null. Calling Dispose()");
+                                dwv.Dispose();
+                            }
+
                             WebView = null;
                         }
                     });
@@ -54,7 +64,7 @@ namespace Microsoft.Toolkit.Win32.UI.Controls.Test.WinForms.WebView.FunctionalTe
 
         protected override void Given()
         {
-            if (!Controls.WinForms.WebView.IsSupported)
+            if (!WinForms.WebView.IsSupported || !WPF.WebView.IsSupported)
             {
                 // Test cannot execute because we're on the wrong OS
                 Assert.Inconclusive(DesignerUI.E_NOTSUPPORTED_OS_RS4);
@@ -109,9 +119,12 @@ namespace Microsoft.Toolkit.Win32.UI.Controls.Test.WinForms.WebView.FunctionalTe
             WebView.DOMContentLoaded -= OnDomContentLoaded;
             WebView.NavigationCompleted -= OnNavigationCompleted;
 
-            WebView.Disposed -= OnDisposed;
-            WebView.GotFocus -= OnGotFocus;
-            WebView.LostFocus -= OnLostFocus;
+            if (WebView is WinForms.WebView wfwv)
+            {
+                wfwv.Disposed -= OnDisposed;
+                wfwv.GotFocus -= OnGotFocus;
+                wfwv.LostFocus -= OnLostFocus;
+            }
 
             if (WebView.Process != null)
             {
@@ -128,9 +141,12 @@ namespace Microsoft.Toolkit.Win32.UI.Controls.Test.WinForms.WebView.FunctionalTe
             WebView.DOMContentLoaded += OnDomContentLoaded;
             WebView.NavigationCompleted += OnNavigationCompleted;
 
-            WebView.Disposed += OnDisposed;
-            WebView.GotFocus += OnGotFocus;
-            WebView.LostFocus += OnLostFocus;
+            if (WebView is WinForms.WebView wfwv)
+            {
+                wfwv.Disposed += OnDisposed;
+                wfwv.GotFocus += OnGotFocus;
+                wfwv.LostFocus += OnLostFocus;
+            }
 
             if (WebView.Process != null)
             {
@@ -145,17 +161,17 @@ namespace Microsoft.Toolkit.Win32.UI.Controls.Test.WinForms.WebView.FunctionalTe
 
         private void OnLostFocus(object sender, EventArgs e)
         {
-            WriteLine($"{WebView.GetType().Name}.{nameof(WebView.LostFocus)}");
+            WriteLine($"{WebView.GetType().Name}.{nameof(WinForms.WebView.LostFocus)}");
         }
 
         private void OnGotFocus(object sender, EventArgs e)
         {
-            WriteLine($"{WebView.GetType().Name}.{nameof(WebView.GotFocus)}");
+            WriteLine($"{WebView.GetType().Name}.{nameof(WinForms.WebView.GotFocus)}");
         }
 
         private void OnDisposed(object sender, EventArgs e)
         {
-            WriteLine($"{WebView.GetType().Name}.{nameof(WebView.Disposed)}");
+            WriteLine($"{WebView.GetType().Name}.{nameof(WinForms.WebView.Disposed)}");
         }
 
         private void OnContentLoading(object o, WebViewControlContentLoadingEventArgs a)

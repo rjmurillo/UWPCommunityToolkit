@@ -6,9 +6,8 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-using Microsoft.Toolkit.Win32.UI.Controls.Test.WebView.Shared;
 
-namespace Microsoft.Toolkit.Win32.UI.Controls.Test.WinForms.WebView.FunctionalTests
+namespace Microsoft.Toolkit.Win32.UI.Controls.Test.WebView.Shared
 {
     [DebuggerStepThrough]
     public abstract class BlockTestStartEndContextSpecification : WebViewContextSpecification
@@ -179,16 +178,8 @@ namespace Microsoft.Toolkit.Win32.UI.Controls.Test.WinForms.WebView.FunctionalTe
                     }
                 }
 
-
                 Task.WaitAll(tasks);
             }
         }
-
-
-
-
     }
-
-
 }
-

@@ -1,10 +1,10 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFramework>net462</TargetFramework>
     <RootNamespace>Microsoft.Toolkit.Win32.UI.Controls.Test.WebView.Shared</RootNamespace>
     <AssemblyName>Microsoft.Toolkit.Win32.UI.Controls.Test.WebView.Shared</AssemblyName>
     <AssemblyTitle>UnitTests.WebView.Shared</AssemblyTitle>
-    <Description>UnitTests.WebView.Shared</Description>  
+    <Description>UnitTests.WebView.Shared</Description>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{B220BE88-944E-45D1-9248-6FAEF53868A3}</ProjectGuid>
@@ -15,6 +15,8 @@
     <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <TargetFrameworkProfile />
+    <SignAssembly>false</SignAssembly>
+    <AssemblyOriginatorKeyFile />
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)' == 'Release'">
     <DebugSymbols>true</DebugSymbols>
@@ -42,11 +44,15 @@
   <ItemGroup>
     <PackageReference Include="MSTest.TestAdapter" Version="1.3.2" />
     <PackageReference Include="MSTest.TestFramework" Version="1.3.2" />
+    <PackageReference Include="Should" Version="1.1.20" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System.Management" />
+    <Reference Include="System.Windows.Forms" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\..\Microsoft.Toolkit.Win32.UI.Controls\ClientUtilities.cs" Link="ClientUtilities.cs" />
+    <Compile Include="..\..\Microsoft.Toolkit.Win32.UI.Controls\DesignerUI.Designer.cs" Link="DesignerUI.Designer.cs" />
     <Compile Include="..\..\Microsoft.Toolkit.Win32.UI.Controls\Interop\Win32\ExternDll.cs" Link="ExternDll.cs" />
     <Compile Include="..\..\Microsoft.Toolkit.Win32.UI.Controls\Interop\Win32\Facility.cs" Link="Facility.cs" />
     <Compile Include="..\..\Microsoft.Toolkit.Win32.UI.Controls\Interop\Win32\HRESULT.cs" Link="HRESULT.cs" />
@@ -54,5 +60,10 @@
     <Compile Include="..\..\Microsoft.Toolkit.Win32.UI.Controls\Interop\Win32\ProductType.cs" Link="ProductType.cs" />
     <Compile Include="..\..\Microsoft.Toolkit.Win32.UI.Controls\Interop\Win32\Win32Error.cs" Link="Win32Error.cs" />
     <Compile Include="..\..\Microsoft.Toolkit.Win32.UI.Controls\Verify.cs" Link="Verify.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="..\..\Microsoft.Toolkit.Win32.UI.Controls\DesignerUI.resx" Link="DesignerUI.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+    </EmbeddedResource>
   </ItemGroup>
 </Project>
