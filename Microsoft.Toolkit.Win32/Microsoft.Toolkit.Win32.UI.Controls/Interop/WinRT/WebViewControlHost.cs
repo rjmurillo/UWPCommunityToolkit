@@ -251,30 +251,6 @@ namespace Microsoft.Toolkit.Win32.UI.Controls.Interop.WinRT
             }
         }
 
-        /// <summary>
-        /// Gets the version of EDGEHTML.DLL used by the control.
-        /// </summary>
-        /// <value>The version of EDGEHTML.DLL used by the control.</value>
-        internal Version Version
-        {
-            get
-            {
-                if (OSVersionHelper.EdgeExists)
-                {
-                    var versionInfo = FileVersionInfo.GetVersionInfo(
-                        Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.System), "edgehtml.dll"));
-                    return new Version(
-                        versionInfo.FileMajorPart,
-                        versionInfo.FileMinorPart,
-                        versionInfo.FileBuildPart,
-                        versionInfo.FilePrivatePart);
-                }
-
-                // Reuse the message, close enough
-                throw new InvalidOperationException(DesignerUI.E_NOTSUPPORTED_OS_RS4);
-            }
-        }
-
         private Guid LastNavigation
         {
             get;

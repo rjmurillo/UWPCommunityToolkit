@@ -466,15 +466,7 @@ namespace Microsoft.Toolkit.Win32.UI.Controls.WPF
 
         /// <inheritdoc />
         [Browsable(false)]
-        public Version Version
-        {
-            get
-            {
-                VerifyAccess();
-                Verify.IsNotNull(_webViewControl);
-                return _webViewControl?.Version;
-            }
-        }
+        public Version Version => OSVersionHelper.EdgeVersion;
 
         /// <inheritdoc cref="IWebView.AddPreLoadedScript" />
         public void AddPreLoadedScript(string script)

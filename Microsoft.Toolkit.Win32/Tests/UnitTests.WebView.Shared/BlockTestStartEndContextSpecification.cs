@@ -24,14 +24,16 @@ namespace Microsoft.Toolkit.Win32.UI.Controls.Test.WebView.Shared
 
                     TryAction(() =>
                     {
-                        if (WebView.Process == null) return;
+                        var wvcProcess = WebView.Process;
 
-                        var process = Process.GetProcessById((int)WebView.Process.ProcessId);
-                        if (process != null)
+                        if (wvcProcess != null)
                         {
-                            WriteLine($"[{process.Id}] {process.ProcessName}");
+                            var process = Process.GetProcessById((int)wvcProcess.ProcessId);
+                            if (process != null)
+                            {
+                                WriteLine($"[{process.Id}] {process.ProcessName}");
+                            }
                         }
-
                     });
                 });
         }

@@ -3,6 +3,7 @@
 // See the LICENSE file in the project root for more information.
 
 using System;
+using System.Diagnostics;
 using System.IO;
 using System.Security;
 using Microsoft.Toolkit.Win32.UI.Controls.Interop.Win32;
@@ -53,7 +54,28 @@ namespace Microsoft.Toolkit.Win32.UI.Controls.Interop
 
         internal static bool IsWindowsNt { get; } = Environment.OSVersion.Platform == PlatformID.Win32NT;
 
-        internal static bool EdgeExists { get; } = File.Exists(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.System), ExternDll.EdgeHtml));
+        internal static bool EdgeExists { get; } =
+            File.Exists(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.System), ExternDll.EdgeHtml));
+
+        internal static Version EdgeVersion
+        {
+            get
+            {
+                if (EdgeExists)
+                {
+                    var versionInfo = FileVersionInfo.GetVersionInfo(
+                        Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.System), "edgehtml.dll"));
+                    return new Version(
+                        versionInfo.FileMajorPart,
+                        versionInfo.FileMinorPart,
+                        versionInfo.FileBuildPart,
+                        versionInfo.FilePrivatePart);
+                }
+
+                // Reuse the message, close enough
+                throw new InvalidOperationException(DesignerUI.E_NOTSUPPORTED_OS_RS4);
+            }
+        }
 
         internal static bool IsWindows10 { get; } = IsWindowsNt && IsSince(WindowsVersions.Win10);
 

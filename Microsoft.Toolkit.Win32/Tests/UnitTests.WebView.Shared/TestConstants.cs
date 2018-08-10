@@ -40,6 +40,7 @@ namespace Microsoft.Toolkit.Win32.UI.Controls.Test.WebView.Shared
             public const string Des = "Designer";
             public const string Proc = "Process";
             public const string Wf = "WinForms";
+            public const string Wpf = "WPF";
         }
     }
 }

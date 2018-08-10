@@ -5,6 +5,9 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
+using System.Net.Http;
+using System.Text;
 using System.Windows.Forms;
 using Microsoft.Toolkit.Win32.UI.Controls.Interop.WinRT;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -25,6 +28,83 @@ namespace Microsoft.Toolkit.Win32.UI.Controls.Test.WebView.Shared
 
         private static bool _alreadyInBlock = false;
         protected virtual IWebView WebView { get; set; }
+
+        protected virtual void NavigateAndWaitForFormClose(Uri uri)
+        {
+            PerformActionAndWaitForFormClose(() =>
+            {
+                WriteLine($"Navigating WebView with URI: {uri}");
+                WebView.Navigate(uri);
+            });
+        }
+
+        protected virtual void NavigateAndWaitForFormClose(
+            Uri requestUri,
+            HttpMethod httpMethod,
+            string content = null,
+            IEnumerable<KeyValuePair<string, string>> headers = null)
+        {
+            PerformActionAndWaitForFormClose(() =>
+            {
+                string Convert(IEnumerable<KeyValuePair<string, string>> kvp)
+                {
+                    if (kvp == null)
+                    {
+                        kvp = Enumerable.Empty<KeyValuePair<string, string>>();
+                    }
+
+                    var sb = new StringBuilder();
+                    foreach (var k in kvp)
+                    {
+                        sb.AppendLine($"\r\n    {k.Key}={k.Value}");
+                    }
+
+                    return sb.ToString();
+                }
+
+                WriteLine(
+@"Navigating WebView with
+  URI:     {0}
+  METHOD:  {1}
+  CONTENT: {2}
+  HEADERS: {3}",
+                    requestUri, httpMethod, content ?? string.Empty, Convert(headers));
+                WebView.Navigate(requestUri, httpMethod, content, headers);
+            });
+        }
+
+        protected virtual void NavigateToLocalAndWaitForFormClose(string relativePath)
+        {
+            PerformActionAndWaitForFormClose(() =>
+            {
+                WriteLine("Navigating WebView:");
+                WebView.NavigateToLocal(relativePath);
+            });
+        }
+
+        protected virtual void NavigateToLocalAndWaitForFormClose(Uri relativePath, IUriToStreamResolver streamResolver)
+        {
+            PerformActionAndWaitForFormClose(() =>
+            {
+                WriteLine("Navigating WebView");
+                WebView.NavigateToLocalStreamUri(relativePath, streamResolver);
+            });
+        }
+
+        protected virtual void NavigateToStringAndWaitForFormClose(string content)
+        {
+            PerformActionAndWaitForFormClose(() =>
+            {
+                WriteLine("Navigating WebView with content:");
+                WriteLine(content);
+                WebView.NavigateToString(content);
+            });
+        }
+
+        protected virtual void PerformActionAndWaitForFormClose(Action callback)
+        {
+            callback();
+        }
 
         protected override void Cleanup()
         {
