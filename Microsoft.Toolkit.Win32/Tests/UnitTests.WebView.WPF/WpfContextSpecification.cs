@@ -10,9 +10,13 @@ using Should;
 
 namespace Microsoft.Toolkit.Win32.UI.Controls.Test.WPF.WebView
 {
-
     [TestCategory(TestConstants.Categories.Wpf)]
-    public abstract class WpfContextSpecification : BlockTestStartEndContextSpecification
+    public abstract class WpfContextSpecification :
+#if WAIT_FOR_WWAHOST
+        BlockTestStartEndContextSpecification
+#else
+        WebViewContextSpecification
+#endif
     {
         protected WpfContextSpecification()
         {

@@ -20,7 +20,12 @@ namespace Microsoft.Toolkit.Win32.UI.Controls.Test.WinForms.WebView.FunctionalTe
 {
     [DebuggerStepThrough]
     [TestCategory(TestConstants.Categories.Wf)]
-    public abstract class WebViewFormContextSpecification : BlockTestStartEndContextSpecification
+    public abstract class WebViewFormContextSpecification :
+#if WAIT_FOR_WWAHOST
+        BlockTestStartEndContextSpecification
+#else
+        WebViewContextSpecification
+#endif
     {
         protected WebViewFormContextSpecification()
         {
