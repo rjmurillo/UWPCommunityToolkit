@@ -13,4 +13,24 @@ namespace Microsoft.Toolkit.Win32.UI.Controls.Test.WebView.FunctionalTests.Navig
     public partial class HTTP_POST : HostFormWebViewContextSpecification
     {
     }
+
+    public partial class Navigate2Tests : HostFormWebViewContextSpecification
+    {
+    }
+
+    public partial class NavigateGetWithBasicAuth : HostFormWebViewContextSpecification
+    {
+    }
+
+    public partial class NavigateGetWithHeaders : HostFormWebViewContextSpecification
+    {
+    }
+
+    public partial class NavigateOption : HostFormWebViewContextSpecification
+    {
+    }
+
+    public partial class NavigatePostWithContent : HostFormWebViewContextSpecification
+    {
+    }
 }
