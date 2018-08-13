@@ -545,6 +545,7 @@ namespace Microsoft.Toolkit.Win32.UI.Controls.Interop.WinRT
             _webViewControl?.NavigateToLocalStreamUri(uri, AsWindowsRuntimeUriToStreamResolver(streamResolver));
         }
 
+        /// <exception cref="ArgumentOutOfRangeException">Occurs when <paramref name="method"/> is not <see cref="HttpMethod.Get"/> or <see cref="HttpMethod.Post"/>.</exception>
         internal void Navigate(
             Uri requestUri,
             System.Net.Http.HttpMethod method,
@@ -575,7 +576,7 @@ namespace Microsoft.Toolkit.Win32.UI.Controls.Interop.WinRT
                 }
 
                 // For compatabilty with WebView.NavigateWithHttpRequestMessage, this only supports POST and GET
-                throw new ArgumentOutOfRangeException(nameof(httpMethod));
+                throw new ArgumentOutOfRangeException(nameof(httpMethod), httpMethod, DesignerUI.E_WEBVIEW_HTTPMETHOD_ARGUMENT_OUTOFRANGE);
             }
 
             var requestMessage = new HttpRequestMessage

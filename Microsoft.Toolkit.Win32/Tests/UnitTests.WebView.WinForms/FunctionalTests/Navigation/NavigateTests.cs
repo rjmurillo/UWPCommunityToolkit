@@ -183,24 +183,21 @@ namespace Microsoft.Toolkit.Win32.UI.Controls.Test.WebView.FunctionalTests.Navig
             };
         }
 
-        protected override void When()
-        {
-            PerformActionAndWaitForFormClose(() =>
-            {
-
-
-                WebView.Navigate(
-                    TestConstants.Uris.ExampleCom,
-                    HttpMethod.Options
-                    );
-            });
-        }
-
         [TestMethod]
         [ExpectedException(typeof(ArgumentOutOfRangeException))]
         [Ignore("Pops UI that stalls test")]
         public void Explict_HTTP_OPTION_fails()
         {
+            // This is here instead of in When
+            // An exception is thrown which isn't caught property by the test framework
+            PerformActionAndWaitForFormClose(() =>
+            {
+                WebView.Navigate(
+                    TestConstants.Uris.ExampleCom,
+                    HttpMethod.Options
+                );
+            });
+
             _navigationCompleted.ShouldBeFalse();
         }
     }

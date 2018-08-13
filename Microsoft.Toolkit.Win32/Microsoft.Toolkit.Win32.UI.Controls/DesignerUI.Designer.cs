@@ -241,6 +241,15 @@ namespace Microsoft.Toolkit.Win32.UI.Controls {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The specified argument was out of the range of valid values..
+        /// </summary>
+        internal static string E_WEBVIEW_HTTPMETHOD_ARGUMENT_OUTOFRANGE {
+            get {
+                return ResourceManager.GetString("E_WEBVIEW_HTTPMETHOD_ARGUMENT_OUTOFRANGE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The code in your application sets the Source property or calls the Navigate method by using an invalid URI..
         /// </summary>
         internal static string E_WEBVIEW_INVALID_URI {

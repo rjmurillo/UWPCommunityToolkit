@@ -178,6 +178,9 @@
     <value>The code in your application is attempting to use a member of the WebView control before the control is completely initialized.</value>
     <comment>A WebView member has been invoked before the control has been initialized</comment>
   </data>
+  <data name="E_WEBVIEW_HTTPMETHOD_ARGUMENT_OUTOFRANGE" xml:space="preserve">
+    <value>The specified argument was out of the range of valid values.</value>
+  </data>
   <data name="E_WEBVIEW_INVALID_URI" xml:space="preserve">
     <value>The code in your application sets the Source property or calls the Navigate method by using an invalid URI.</value>
     <comment>Navigate called with a value that cannot be converted to Uri</comment>
