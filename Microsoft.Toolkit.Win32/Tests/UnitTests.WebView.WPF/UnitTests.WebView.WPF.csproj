@@ -59,6 +59,7 @@
     <Compile Include="..\..\Microsoft.Toolkit.Win32.UI.Controls\Interop\WinRT\WebViewDefaults.cs" Link="Shared\WebViewDefaults.cs" />
     <Compile Include="..\..\Microsoft.Toolkit.Win32.UI.Controls\PathUtilities.cs" Link="Shared\PathUtilities.cs" />
     <Compile Include="..\..\Microsoft.Toolkit.Win32.UI.Controls\UriHelper.cs" Link="Shared\UriHelper.cs" />
+    <Compile Include="..\UnitTests.WebView.WinForms\FunctionalTests\NavigateToLocalStreamUri\TestStreamResolver.cs" Link="TestStreamResolver.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Microsoft.Toolkit.Win32.UI.Controls\Microsoft.Toolkit.Win32.UI.Controls.csproj" />
