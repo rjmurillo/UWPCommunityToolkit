@@ -39,6 +39,7 @@ namespace Microsoft.Toolkit.Win32.UI.Controls.Test.WinForms.WebView.FunctionalTe
         }
 
         [TestMethod]
+        [Timeout(TestConstants.Timeouts.Longest)]
         public void WebGLContextCreated()
         {
         }
