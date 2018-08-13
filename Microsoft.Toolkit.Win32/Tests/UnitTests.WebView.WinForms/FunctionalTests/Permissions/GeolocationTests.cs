@@ -69,7 +69,7 @@ namespace Microsoft.Toolkit.Win32.UI.Controls.Test.WinForms.WebView.FunctionalTe
         }
 
         [TestMethod]
-        [Timeout(TestConstants.Timeouts.Long)]
+        [Timeout(TestConstants.Timeouts.Longest)]
         public void PermissionRequestReceived()
         {
             _permissionRequest.ShouldNotBeNull();
