@@ -72,7 +72,6 @@ var getTextContent = function() {
 
         [TestMethod]
         [Timeout(TestConstants.Timeouts.Longest)]
-        [Ignore("Causing test run to abort")]
         public void InvokedScriptReturnedExpectedValue()
         {
             _actual.ShouldEqual(_expected);
@@ -111,7 +110,6 @@ var getTextContent = function() {
 
         [TestMethod]
         [Timeout(TestConstants.Timeouts.Longest)]
-        [Ignore("Causing test run to abort")]
         public void InvokedScriptReturnedExpectedValue()
         {
             _actual.ShouldEqual(_expected);
@@ -158,7 +156,6 @@ function echoOneArgument(argument) {
 
         [TestMethod]
         [Timeout(TestConstants.Timeouts.Longest)]
-        [Ignore("Causing test run to abort")]
         public void InvokedScriptReturnedExpectedValue()
         {
             _actual.ShouldEqual(_expected);
@@ -197,7 +194,6 @@ function echoOneArgument(argument) {
 
         [TestMethod]
         [Timeout(TestConstants.Timeouts.Longest)]
-        [Ignore("Causing test run to abort")]
         public void InvokedScriptReturnedExpectedValue()
         {
             _actual.ShouldEqual(_expected);

@@ -224,6 +224,8 @@ namespace Microsoft.Toolkit.Win32.UI.Controls.Interop.WinRT
                 if (_webViewControl != null)
                 {
                     // Current url
+                    // Note this can throw an AccessViolationException due to bug
+                    // See OS #17666057 / GitHub #2165
                     url = _webViewControl.Source;
 
                     // When Source set to null or navigating to stream/string, we navigate to "about:blank"
