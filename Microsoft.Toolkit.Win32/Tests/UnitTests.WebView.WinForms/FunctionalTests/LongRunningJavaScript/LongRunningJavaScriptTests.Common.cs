@@ -13,7 +13,10 @@ namespace Microsoft.Toolkit.Win32.UI.Controls.Test.WebView.FunctionalTests.LongR
     public abstract partial class LongRunningJavaScriptTestContext
     {
         public string Content { get; private set; }
+
         public bool LongRunningScriptDetectedEventRaised { get; private set; }
+
+        public bool ScriptNotifyEventRaised { get; private set; }
 
         protected override void Given()
         {
@@ -54,8 +57,8 @@ namespace Microsoft.Toolkit.Win32.UI.Controls.Test.WebView.FunctionalTests.LongR
 
             WebView.ScriptNotify += (o, e) =>
             {
-                // Got to the end, didn't raise LongRunningScriptDetected
-                Form.Close();
+                WriteLine($"{nameof(WebView.ScriptNotify)}: {e.Value}");
+                ScriptNotifyEventRaised = true;
             };
 
             async void OnWebViewOnNavigationCompleted(object o, WebViewControlNavigationCompletedEventArgs e)
@@ -76,6 +79,10 @@ namespace Microsoft.Toolkit.Win32.UI.Controls.Test.WebView.FunctionalTests.LongR
                             throw;
                     }
                 }
+                finally
+                {
+                    Form.Close();
+                }
             }
 
             WebView.NavigationCompleted += OnWebViewOnNavigationCompleted;
@@ -95,6 +102,7 @@ namespace Microsoft.Toolkit.Win32.UI.Controls.Test.WebView.FunctionalTests.LongR
         public void LongRunningJavaScriptEventRaised()
         {
             LongRunningScriptDetectedEventRaised.ShouldBeTrue();
+            ScriptNotifyEventRaised.ShouldBeTrue();
         }
     }
 
@@ -108,7 +116,6 @@ namespace Microsoft.Toolkit.Win32.UI.Controls.Test.WebView.FunctionalTests.LongR
             WebView.LongRunningScriptDetected += (o, e) =>
             {
                 e.StopPageScriptExecution = true;
-                Form.Close();
             };
         }
 
@@ -117,6 +124,7 @@ namespace Microsoft.Toolkit.Win32.UI.Controls.Test.WebView.FunctionalTests.LongR
         public void LongRunningJavaScriptEventRaised()
         {
             LongRunningScriptDetectedEventRaised.ShouldBeTrue();
+            ScriptNotifyEventRaised.ShouldBeFalse();
         }
     }
 }
